@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class ProduceScript : MonoBehaviour
 {
     CapsuleCollider capsuleCollider;
+
+    [SerializeField]
+    private GameObject roots;
 
     [SerializeField] 
     int Health = 100;
@@ -22,12 +26,7 @@ public class ProduceScript : MonoBehaviour
     [SerializeField]
     float growthRate = 1.05f;
 
-    [SerializeField]
-    Material Low;
-    [SerializeField]
-    Material Mid;
-    [SerializeField]
-    Material High;
+    float rootGrowRate { get { return 1 + 2.0f * (growthRate - 1.0f); } }
 
     [SerializeField]
     GameObject cornModel;
@@ -60,7 +59,6 @@ public class ProduceScript : MonoBehaviour
 
         Material tmp = renderer.material;
 
-        //tmp.SetColor("_Color", GetColor());
         var healthRatio = Health / 100.0f;
         System.Console.WriteLine(healthRatio);
         tmp.SetFloat("_Blend", Health/100.0f);
@@ -68,16 +66,6 @@ public class ProduceScript : MonoBehaviour
         System.Console.WriteLine(string.Format("Damaged by {0}",damage));
     }
 
-    Color GetColor()
-    {
-        if (Health < 10)
-            return Low.color;
-
-        if (Health < 60)
-            return Mid.color;
-
-        return High.color;
-    }
 
     // Start is called before the first frame update
     IEnumerator GrowProduce()
@@ -94,7 +82,9 @@ public class ProduceScript : MonoBehaviour
 
             transform.localScale = oldlocalScale;
 
-            if(Health<100)
+            roots.transform.localScale = new Vector3(roots.transform.localScale.x * rootGrowRate, roots.transform.localScale.y, roots.transform.localScale.z * rootGrowRate);
+
+            if (Health<100)
                 Health += HealthRegen;
         }
     }

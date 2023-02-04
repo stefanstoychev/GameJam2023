@@ -1,17 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeedScript : MonoBehaviour
 {
     private HashSet<GameObject> infectedProduce = new HashSet<GameObject>();
 
-    private Rigidbody rigidbody;
-    private CapsuleCollider colider;
+    [SerializeField]
+    private GameObject roots;
+
+    private SphereCollider colider;
 
     [SerializeField]
     float growthRate = 1.05f;
+
+    float rootGrowRate { get { return 1 + 2.0f * (growthRate - 1.0f); } }
 
     [SerializeField]
     int GrowthTickInSeconds = 1;
@@ -24,8 +29,7 @@ public class WeedScript : MonoBehaviour
 
     IEnumerator Start()
     {
-        rigidbody = this.GetComponent<Rigidbody>();
-        colider = this.GetComponent<CapsuleCollider>();
+        colider = this.GetComponent<SphereCollider>();
 
         print("Starting " + Time.time);
 
@@ -61,13 +65,13 @@ public class WeedScript : MonoBehaviour
 
     void GrowWeed()
     {
-        var oldlocalScale = colider.transform.localScale;
+        var oldlocalScale = transform.localScale;
 
         colider.radius = colider.radius * growthRate;
 
-        oldlocalScale.Set(oldlocalScale.x, oldlocalScale.y * growthRate, oldlocalScale.z);
+        transform.localScale = new Vector3(oldlocalScale.x, oldlocalScale.y * growthRate, oldlocalScale.z);
 
-        colider.transform.localScale = oldlocalScale;
+        roots.transform.localScale = new Vector3(roots.transform.localScale.x * rootGrowRate, roots.transform.localScale.y, roots.transform.localScale.z * rootGrowRate);
     }
 
     private void OnTriggerEnter(Collider other)
