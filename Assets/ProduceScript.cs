@@ -26,7 +26,13 @@ public class ProduceScript : MonoBehaviour
     [SerializeField]
     float growthRate = 1.05f;
 
+    float currentGrowthRate = 1.0f;
+
+    float maxGrowthRate = 1.0007f;
+
     float rootGrowRate { get { return 1 + 2.0f * (growthRate - 1.0f); } }
+
+    float currentRootGrowthRate = 1.0f;
 
     [SerializeField]
     GameObject cornModel;
@@ -68,24 +74,38 @@ public class ProduceScript : MonoBehaviour
 
 
     // Start is called before the first frame update
-    IEnumerator GrowProduce()
+    IEnumerator GrowProduceCoroutine()
     {
+  
         for (int i = 0; i < MaxTicks; i++)
         {
             yield return new WaitForSeconds(GrowthTickInSeconds);
 
-            capsuleCollider.radius = capsuleCollider.radius * growthRate;
-
-            var oldlocalScale = transform.localScale;
-
-            oldlocalScale.Set(oldlocalScale.x * growthRate, oldlocalScale.y * growthRate, oldlocalScale.z * growthRate);
-
-            transform.localScale = oldlocalScale;
-
-            roots.transform.localScale = new Vector3(roots.transform.localScale.x * rootGrowRate, roots.transform.localScale.y, roots.transform.localScale.z * rootGrowRate);
+            if (rootGrowRate < maxGrowthRate)
+            {
+                GrowProduce();
+            }
 
             if (Health<100)
                 Health += HealthRegen;
         }
+    }
+
+    void GrowProduce()
+    {
+        currentGrowthRate *= growthRate;
+
+        capsuleCollider.radius = capsuleCollider.radius * currentGrowthRate;
+
+        var oldlocalScale = transform.localScale;
+
+        oldlocalScale.Set(oldlocalScale.x * currentGrowthRate, oldlocalScale.y * currentGrowthRate, oldlocalScale.z * currentGrowthRate);
+
+        transform.localScale = oldlocalScale;
+
+        currentRootGrowthRate *= rootGrowRate;
+
+        roots.transform.localScale = new Vector3(roots.transform.localScale.x * currentRootGrowthRate, roots.transform.localScale.y, roots.transform.localScale.z * currentRootGrowthRate);
+
     }
 }

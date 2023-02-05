@@ -9,6 +9,9 @@ public class WeedScript : MonoBehaviour
     private HashSet<GameObject> infectedProduce = new HashSet<GameObject>();
 
     [SerializeField]
+    private GameObject leafs;
+
+    [SerializeField]
     private GameObject roots;
 
     private SphereCollider colider;
@@ -16,7 +19,13 @@ public class WeedScript : MonoBehaviour
     [SerializeField]
     float growthRate = 1.05f;
 
+    float currentGrowthRate = 1.0f;
+
     float rootGrowRate { get { return 1 + 2.0f * (growthRate - 1.0f); } }
+
+    float currentRootGrowthRate = 1.0f;
+
+    float maxGrowthRate = 1.0007f;
 
     [SerializeField]
     int GrowthTickInSeconds = 1;
@@ -65,13 +74,21 @@ public class WeedScript : MonoBehaviour
 
     void GrowWeed()
     {
-        var oldlocalScale = transform.localScale;
+        if (currentRootGrowthRate < maxGrowthRate)
+        {
+            currentGrowthRate *= growthRate;
 
-        colider.radius = colider.radius * growthRate;
+            var oldlocalScale = leafs.transform.localScale;
 
-        transform.localScale = new Vector3(oldlocalScale.x, oldlocalScale.y * growthRate, oldlocalScale.z);
+            colider.radius = colider.radius * currentGrowthRate;
 
-        roots.transform.localScale = new Vector3(roots.transform.localScale.x * rootGrowRate, roots.transform.localScale.y, roots.transform.localScale.z * rootGrowRate);
+            leafs.transform.localScale = new Vector3(oldlocalScale.x, oldlocalScale.y * currentGrowthRate, oldlocalScale.z);
+
+            currentRootGrowthRate *= rootGrowRate;
+
+            roots.transform.localScale = new Vector3(roots.transform.localScale.x * currentRootGrowthRate, roots.transform.localScale.y, roots.transform.localScale.z * currentRootGrowthRate);
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
