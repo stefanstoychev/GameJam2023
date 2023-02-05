@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WeePicker : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class WeePicker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UnityEngine.XR.InputDevices.GetDevicesWithRole(UnityEngine.XR.InputDeviceRole.LeftHanded, gameControllers);
+        UnityEngine.XR.InputDevices.GetDevicesWithRole(UnityEngine.XR.InputDeviceRole.RightHanded, gameControllers);
     }
 
     // Update is called once per frame
@@ -24,6 +25,20 @@ public class WeePicker : MonoBehaviour
             if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) && triggerValue)
             {
                 PickWeeds();
+            }
+
+            Vector2 moveAxis;
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.dPad, out moveAxis))
+            {
+                //moveAxis=
+            }
+
+
+            bool primaryButton;
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButton))
+            {
+                if(primaryButton)
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
 

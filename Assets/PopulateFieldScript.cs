@@ -28,7 +28,10 @@ public class PopulateFieldScript : MonoBehaviour
         {
             for (int j = -RowLenght; j < RowLenght; j++)
             {
-                var newInstance = Instantiate(Produce, new Vector3(i * ProduceSpacing, 0, j * ProduceSpacing), Quaternion.identity);
+                var newInstance = Instantiate(Produce, new Vector3(i * ProduceSpacing + Random.Range(0,2), 0, j * ProduceSpacing + +Random.Range(0, 2)), Quaternion.identity);
+
+                newInstance.transform.rotation = Quaternion.Euler(1.0f, Random.Range(0.0f, 360f), 1.0f);
+
                 newInstance.transform.SetParent(transform);
 
                 if (ShouldPlaceWeed())
