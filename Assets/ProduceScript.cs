@@ -67,7 +67,7 @@ public class ProduceScript : MonoBehaviour
 
         var healthRatio = Health / 100.0f;
         System.Console.WriteLine(healthRatio);
-        tmp.SetFloat("_Blend", Health/100.0f);
+        tmp.SetFloat("_Blend", healthRatio);
 
         System.Console.WriteLine(string.Format("Damaged by {0}",damage));
     }
