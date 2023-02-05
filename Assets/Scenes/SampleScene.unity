@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.59937435, g: 0.5997503, b: 0.5994879, a: 1}
+  m_IndirectSpecularColor: {r: 0.27046037, g: 0.2953599, b: 0.25995195, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 594881590}
   - component: {fileID: 594881589}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: WeedPicker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -348,14 +348,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594881587}
-  m_LocalRotation: {x: -0, y: -0, z: 0.08715578, w: 0.9961947}
-  m_LocalPosition: {x: 0.002141815, y: -0.024481047, z: 0.01720729}
-  m_LocalScale: {x: 0.08686001, y: 0.08685999, z: 0.08686}
+  m_LocalRotation: {x: -0.09323499, y: 0.9888079, z: 0.081499554, w: 0.08321041}
+  m_LocalPosition: {x: 0.0081, y: -0.0174, z: -0.0218}
+  m_LocalScale: {x: -6.1109, y: 6.1109, z: 6.1109}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 945631407}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -10.177, y: 171.272, z: -9.994}
 --- !u!54 &594881589
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -384,6 +384,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 275047e530fcda14b965af12cec92ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveScale: 0.4
+  vrRootNode: {fileID: 1725982592}
 --- !u!135 &594881591
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -417,7 +419,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: febf3485f83600f4ea1617bcf8f1250b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -446,7 +448,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594881587}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -1848033944451019704, guid: 3991acd9e7151914eb922a1992f4cdde, type: 3}
 --- !u!1 &599916901
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,7 +983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Produce>k__BackingField: {fileID: 1396268792}
   <Weed>k__BackingField: {fileID: 2035689179}
-  RowLenght: 5
+  RowLenght: 30
   <ProduceSpacing>k__BackingField: 0.7
   <WeedWiggle>k__BackingField: 0.5
 --- !u!1 &1347863958

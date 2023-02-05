@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class WeePicker : MonoBehaviour
 {
+    [SerializeField]
+    float moveScale = 0.4f;
+
+    [SerializeField]
+    private GameObject vrRootNode;
+
     private HashSet<GameObject> weeds = new HashSet<GameObject>();
 
     List<UnityEngine.XR.InputDevice> gameControllers = new List<UnityEngine.XR.InputDevice>();
@@ -28,9 +34,15 @@ public class WeePicker : MonoBehaviour
             }
 
             Vector2 moveAxis;
-            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.dPad, out moveAxis))
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out moveAxis))
             {
-                //moveAxis=
+                var oldTransform = vrRootNode.transform.localPosition;
+
+                oldTransform = new Vector3(oldTransform.x + moveScale * moveAxis.x, oldTransform.y, oldTransform.z + moveScale* moveAxis.y);
+
+                vrRootNode.transform.localPosition = oldTransform;
+
+                Debug.Log(string.Format("Device name {0} 'x: {1}' 'y: {2}'", device.name, moveAxis.x, moveAxis.y));   
             }
 
 
